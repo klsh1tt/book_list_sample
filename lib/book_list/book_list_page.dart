@@ -1,3 +1,4 @@
+import 'package:book_list_sample/add_book/add_book_page.dart';
 import 'package:book_list_sample/book_list/book_list_model.dart';
 import 'package:book_list_sample/domain/book.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,8 +39,17 @@ class BookListPage extends StatelessWidget {
             );
           }),
         ),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //画面遷移
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddBookPage(),
+                fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
+              ),
+            );
+          },
           tooltip: 'Increment',
           child: Icon(Icons.add),
         ),
