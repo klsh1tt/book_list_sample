@@ -3,6 +3,7 @@ import 'package:book_list_sample/book_list/book_list_model.dart';
 import 'package:book_list_sample/domain/book.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class BookListPage extends StatelessWidget {
@@ -27,9 +28,38 @@ class BookListPage extends StatelessWidget {
 
             final List<Widget> widgets = books
                 .map(
-                  (book) => ListTile(
-                    title: Text(book.title),
-                    subtitle: Text(book.author),
+                  // flutter_slidableの実装
+                  (book) => Slidable(
+                    //更新したい本を左へスワイプして表示されるメニュー
+                    endActionPane: const ActionPane(
+                      motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          // An action can be bigger than the others.
+
+                          backgroundColor: Colors.black45,
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                          label: '編集',
+                          onPressed: () {
+                            //編集画面に遷移
+                          },
+                        ),
+                        SlidableAction(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: '削除',
+                          onPressed: () {
+                            //削除をするか聞いてから削除
+                          },
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      title: Text(book.title),
+                      subtitle: Text(book.author),
+                    ),
                   ),
                 )
                 .toList();
