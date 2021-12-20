@@ -1,6 +1,7 @@
 import 'package:book_list_sample/add_book/add_book_page.dart';
 import 'package:book_list_sample/book_list/book_list_model.dart';
 import 'package:book_list_sample/domain/book.dart';
+import 'package:book_list_sample/edit_book/edit_book_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -31,7 +32,7 @@ class BookListPage extends StatelessWidget {
                   // flutter_slidableの実装
                   (book) => Slidable(
                     //更新したい本を左へスワイプして表示されるメニュー
-                    endActionPane: const ActionPane(
+                    endActionPane: ActionPane(
                       motion: ScrollMotion(),
                       children: [
                         SlidableAction(
@@ -41,8 +42,23 @@ class BookListPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                           icon: Icons.edit,
                           label: '編集',
-                          onPressed: () {
+                          onPressed: () async {
                             //編集画面に遷移
+                            final String? title = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditBookPage(book),
+                              ),
+                            );
+                            
+                            if (title != null) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text("$titleを編集しました"),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                            model.fetchBookList();
                           },
                         ),
                         SlidableAction(
@@ -50,20 +66,16 @@ class BookListPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: '削除',
-                          onPressed: () {
+                          onPressed: () async {
                             //削除をするか聞いてから削除
+                            await showDialog();
                           },
                         ),
                       ],
                     ),
-                    child: ListTile(
-                      title: Text(book.title),
-                      subtitle: Text(book.author),
-                    ),
                   ),
                 )
                 .toList();
-
             return ListView(
               children: widgets,
             );
