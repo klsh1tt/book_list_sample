@@ -42,7 +42,7 @@ class BookListPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                           icon: Icons.edit,
                           label: '編集',
-                          onPressed: () async {
+                          onPressed: (BuildContext context) async {
                             //編集画面に遷移
                             final String? title = await Navigator.push(
                               context,
@@ -50,7 +50,7 @@ class BookListPage extends StatelessWidget {
                                 builder: (context) => EditBookPage(book),
                               ),
                             );
-                            
+
                             if (title != null) {
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.green,
@@ -66,12 +66,17 @@ class BookListPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: '削除',
-                          onPressed: () async {
+                          onPressed: (BuildContext context) async {
                             //削除をするか聞いてから削除
-                            await showDialog();
                           },
                         ),
                       ],
+                    ),
+                    // The child of the Slidable is what the user sees when the
+                    // component is not dragged.
+                    child: ListTile(
+                      title: Text(book.title),
+                      subtitle: Text(book.author),
                     ),
                   ),
                 )

@@ -17,7 +17,7 @@ class EditBookPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            '本を追加',
+            '本を編集',
           ),
         ),
         body: Center(
