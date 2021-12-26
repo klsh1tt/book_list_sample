@@ -57,6 +57,7 @@ class BookListPage extends StatelessWidget {
                                 backgroundColor: Colors.green,
                                 content: Text("$titleを編集しました"),
                               );
+
                               ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             }
                             model.fetchBookList();

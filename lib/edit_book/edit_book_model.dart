@@ -15,19 +15,26 @@ class EditBookModel extends ChangeNotifier {
   String? title;
   String? author;
 
-  Future update() async {
-    //null or 空文字なら例外処理を実行する
-    if (title == null || title == "") {
-      throw '本のタイトルが入力されていません';
-    }
+  void setTitle(String title) {
+    this.title = title;
+    notifyListeners();
+  }
 
-    if (author == null || author!.isEmpty) {
-      throw '著者が入力されていません';
-    }
+  void setAuthor(String author) {
+    this.author = author;
+    notifyListeners();
+  }
+
+  bool isUpdated() {
+    return title != null || author != null;
+  }
+
+  Future update() async {
+    this.title = titleController.text;
+    this.author = authorController.text;
 
     // firestoreに追加
-    // https://firebase.flutter.dev/docs/firestore/usage/#adding-documents
-    await FirebaseFirestore.instance.collection('books').add({
+    await FirebaseFirestore.instance.collection('books').doc(book.id).update({
       'title': title,
       'author': author,
     });

@@ -32,7 +32,7 @@ class EditBookPage extends StatelessWidget {
                       hintText: '本のタイトル',
                     ),
                     onChanged: (text) {
-                      model.title = text;
+                      model.setTitle(text);
                     },
                   ),
                   SizedBox(
@@ -44,27 +44,29 @@ class EditBookPage extends StatelessWidget {
                       hintText: '本の著者',
                     ),
                     onChanged: (text) {
-                      model.author = text;
+                      model.setAuthor(text);
                     },
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      //追加の処理
-                      try {
-                        await model.update();
-                        Navigator.of(context).pop(true);
-                      } catch (e) {
-                        //エラー時、SnackBarを表示
-                        final snackBar = SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(e.toString()),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
+                    onPressed: model.isUpdated()
+                        ? () async {
+                            //追加の処理
+                            try {
+                              await model.update();
+                              Navigator.of(context).pop(model.title);
+                            } catch (e) {
+                              //エラー時、SnackBarを表示
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(e.toString()),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                          }
+                        : null,
                     child: Text('更新する'),
                   ),
                 ],
