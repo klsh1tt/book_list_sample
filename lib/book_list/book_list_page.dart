@@ -44,6 +44,7 @@ class BookListPage extends StatelessWidget {
                           label: '編集',
                           onPressed: (BuildContext context) async {
                             //編集画面に遷移
+
                             final String? title = await Navigator.push(
                               context,
                               MaterialPageRoute(

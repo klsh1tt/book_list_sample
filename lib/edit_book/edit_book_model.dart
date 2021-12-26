@@ -1,7 +1,17 @@
+import 'package:book_list_sample/domain/book.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class EditBookModel extends ChangeNotifier {
+  final Book book;
+  EditBookModel(this.book) {
+    titleController.text = book.title;
+    authorController.text = book.author;
+  }
+
+  final titleController = TextEditingController();
+  final authorController = TextEditingController();
+
   String? title;
   String? author;
 

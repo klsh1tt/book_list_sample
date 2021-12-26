@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 import 'edit_book_model.dart';
 
 class EditBookPage extends StatelessWidget {
-  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('books').snapshots();
+  final Book book;
+  EditBookPage(this.book);
 
-  EditBookPage(Book book);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditBookModel>(
-      create: (_) => EditBookModel(),
+      create: (_) => EditBookModel(book),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -27,6 +27,7 @@ class EditBookPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
+                    controller: model.titleController,
                     decoration: InputDecoration(
                       hintText: '本のタイトル',
                     ),
@@ -38,6 +39,7 @@ class EditBookPage extends StatelessWidget {
                     height: 8,
                   ),
                   TextField(
+                    controller: model.authorController,
                     decoration: InputDecoration(
                       hintText: '本の著者',
                     ),
