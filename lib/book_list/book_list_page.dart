@@ -70,7 +70,7 @@ class BookListPage extends StatelessWidget {
                           label: '削除',
                           onPressed: (BuildContext context) async {
                             //削除をするか聞いてから削除
-                            await showConfirmDialog(context, book);
+                            await showConfirmDialog(context, book, model);
                           },
                         ),
                       ],
@@ -140,7 +140,15 @@ class BookListPage extends StatelessWidget {
               child: Text("はい"),
               onPressed: () => () async {
                 //modelで削除
-                await model.delete();
+                await model.delete(book);
+                Navigator.pop(context);
+
+                final SnackBar = SnackBar(
+                  bookbackgroundColor: Colors.red,
+                  content: Text('${book.title}を削除しました'),
+                );
+                model.fetchBookList();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
             ),
           ],
