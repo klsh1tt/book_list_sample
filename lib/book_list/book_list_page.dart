@@ -70,6 +70,7 @@ class BookListPage extends StatelessWidget {
                           label: '削除',
                           onPressed: (BuildContext context) async {
                             //削除をするか聞いてから削除
+                            await showConfirmDialog(context, book);
                           },
                         ),
                       ],
@@ -115,6 +116,36 @@ class BookListPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  Future showConfirmDialog(
+    BuildContext context,
+    Book book,
+    BookListModel model,
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("削除の確認"),
+          content: Text("「${book.title}」を削除しますか？"),
+          actions: [
+            TextButton(
+              child: Text("いいえ"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("はい"),
+              onPressed: () => () async {
+                //modelで削除
+                await model.delete();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

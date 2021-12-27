@@ -21,4 +21,8 @@ class BookListModel extends ChangeNotifier {
     this.books = books;
     notifyListeners();
   }
+
+  Future deleteBook(Book book) {
+    
+  }
 }
