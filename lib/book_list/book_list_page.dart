@@ -53,12 +53,7 @@ class BookListPage extends StatelessWidget {
                             );
 
                             if (title != null) {
-                              final snackBar = SnackBar(
-                                backgroundColor: Colors.green,
-                                content: Text("$titleを編集しました"),
-                              );
-
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              _showConfirmSnackBar(book.title, context);
                             }
                             model.fetchBookList();
                           },
@@ -117,4 +112,13 @@ class BookListPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showConfirmSnackBar(title, BuildContext context) {
+  final snackBar = SnackBar(
+    backgroundColor: Colors.green,
+    content: Text("$titleを編集しました"),
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
