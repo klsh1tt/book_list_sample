@@ -9,11 +9,15 @@ import 'package:provider/provider.dart';
 
 class BookListPage extends StatelessWidget {
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('books').snapshots();
+
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookListModel>(
       create: (_) => BookListModel()..fetchBookList(),
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text(
             '本一覧',
@@ -53,7 +57,12 @@ class BookListPage extends StatelessWidget {
                             );
 
                             if (title != null) {
-                              _showConfirmSnackBar(book.title, context);
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text("$titleを編集しました"),
+                              );
+
+                              ScaffoldMessenger.of(_scaffoldKey.currentState!.context).showSnackBar(snackBar);
                             }
                             model.fetchBookList();
                           },
@@ -112,13 +121,4 @@ class BookListPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void _showConfirmSnackBar(title, BuildContext context) {
-  final snackBar = SnackBar(
-    backgroundColor: Colors.green,
-    content: Text("$titleを編集しました"),
-  );
-
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
