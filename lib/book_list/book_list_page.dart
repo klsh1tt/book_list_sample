@@ -9,11 +9,15 @@ import 'package:provider/provider.dart';
 
 class BookListPage extends StatelessWidget {
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('books').snapshots();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookListModel>(
       create: (_) => BookListModel()..fetchBookList(),
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text(
             '本一覧',
@@ -58,7 +62,7 @@ class BookListPage extends StatelessWidget {
                                 content: Text("$titleを編集しました"),
                               );
 
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
                             }
                             model.fetchBookList();
                           },
