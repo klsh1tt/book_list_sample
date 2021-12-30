@@ -138,7 +138,7 @@ class BookListPage extends StatelessWidget {
           actions: [
             TextButton(
               child: Text("いいえ"),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(_scaffoldKey.currentContext!),
             ),
             TextButton(
               child: Text("はい"),
@@ -147,12 +147,12 @@ class BookListPage extends StatelessWidget {
                 await model.delete(book);
                 Navigator.pop(context);
 
-                final SnackBar = SnackBar(
-                  bookbackgroundColor: Colors.red,
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.red,
                   content: Text('${book.title}を削除しました'),
                 );
                 model.fetchBookList();
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
               },
             ),
           ],
