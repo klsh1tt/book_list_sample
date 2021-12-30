@@ -62,7 +62,7 @@ class BookListPage extends StatelessWidget {
                                 content: Text("$titleを編集しました"),
                               );
 
-                              ScaffoldMessenger.of(_scaffoldKey.currentState!.context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
                             }
                             model.fetchBookList();
                           },
