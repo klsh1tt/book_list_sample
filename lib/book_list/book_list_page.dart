@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class BookListPage extends StatelessWidget {
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('books').snapshots();
 
-  var _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
