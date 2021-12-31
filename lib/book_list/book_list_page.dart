@@ -82,6 +82,7 @@ class BookListPage extends StatelessWidget {
                     // The child of the Slidable is what the user sees when the
                     // component is not dragged.
                     child: ListTile(
+                      leading: book.imgURL != null ? Image.network(book.imgURL!) : null,
                       title: Text(book.title),
                       subtitle: Text(book.author),
                     ),
