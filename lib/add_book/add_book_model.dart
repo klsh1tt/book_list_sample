@@ -22,4 +22,5 @@ class AddBookModel extends ChangeNotifier {
       'author': author,
     });
   }
+  //ImagePickerの処理を入れる
 }
