@@ -142,10 +142,10 @@ class BookListPage extends StatelessWidget {
             ),
             TextButton(
               child: Text("はい"),
-              onPressed: () => () async {
+              onPressed: () async {
                 //modelで削除
                 await model.delete(book);
-                Navigator.pop(context);
+                Navigator.pop(_scaffoldKey.currentContext!);
 
                 final snackBar = SnackBar(
                   backgroundColor: Colors.red,
