@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddBookModel extends ChangeNotifier {
   String? title;
   String? author;
+  File? imageFile;
+
+  final picker = ImagePicker();
 
   Future addBook() async {
     //null or 空文字なら例外処理を実行する
@@ -22,5 +28,13 @@ class AddBookModel extends ChangeNotifier {
       'author': author,
     });
   }
-  //ImagePickerの処理を入れる
+
+  Future pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      notifyListeners();
+    }
+  }
 }
