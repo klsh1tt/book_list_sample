@@ -19,9 +19,12 @@ class BookListPage extends StatelessWidget {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: const Text(
-            '本一覧',
-          ),
+          title: const Text('本一覧', actions: [
+            IconButton(onPressed: () {
+              //画面遷移のコードを書く
+              
+            }, icon: Icon(Icons.person)),
+          ]),
         ),
         body: Center(
           child: Consumer<BookListModel>(builder: (context, model, child) {
