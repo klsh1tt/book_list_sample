@@ -9,11 +9,15 @@ import 'package:provider/provider.dart';
 
 class BookListPage extends StatelessWidget {
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('books').snapshots();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookListModel>(
       create: (_) => BookListModel()..fetchBookList(),
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text(
             '本一覧',
@@ -58,7 +62,7 @@ class BookListPage extends StatelessWidget {
                                 content: Text("$titleを編集しました"),
                               );
 
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
                             }
                             model.fetchBookList();
                           },
@@ -70,6 +74,7 @@ class BookListPage extends StatelessWidget {
                           label: '削除',
                           onPressed: (BuildContext context) async {
                             //削除をするか聞いてから削除
+                            await showConfirmDialog(context, book, model);
                           },
                         ),
                       ],
@@ -77,6 +82,7 @@ class BookListPage extends StatelessWidget {
                     // The child of the Slidable is what the user sees when the
                     // component is not dragged.
                     child: ListTile(
+                      leading: book.imgURL != null ? Image.network(book.imgURL!) : null,
                       title: Text(book.title),
                       subtitle: Text(book.author),
                     ),
@@ -115,6 +121,44 @@ class BookListPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  Future showConfirmDialog(
+    BuildContext context,
+    Book book,
+    BookListModel model,
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("削除の確認"),
+          content: Text("「${book.title}」を削除しますか？"),
+          actions: [
+            TextButton(
+              child: Text("いいえ"),
+              onPressed: () => Navigator.pop(_scaffoldKey.currentContext!),
+            ),
+            TextButton(
+              child: Text("はい"),
+              onPressed: () async {
+                //modelで削除
+                await model.delete(book);
+                Navigator.pop(_scaffoldKey.currentContext!);
+
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('${book.title}を削除しました'),
+                );
+                model.fetchBookList();
+                ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
