@@ -20,7 +20,8 @@ class BookListPage extends StatelessWidget {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('本一覧', actions: [
+          title: const Text('本一覧'),
+          actions: [
             IconButton(
                 onPressed: () async {
                   await Navigator.push(
@@ -32,7 +33,7 @@ class BookListPage extends StatelessWidget {
                   );
                 },
                 icon: Icon(Icons.person)),
-          ]),
+          ],
         ),
         body: Center(
           child: Consumer<BookListModel>(builder: (context, model, child) {
