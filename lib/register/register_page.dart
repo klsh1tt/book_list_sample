@@ -50,6 +50,7 @@ class RegisterPage extends StatelessWidget {
                         await model.signUp();
                         //Navigator.of(context).pop(model.title);
                       } catch (e) {
+                        print(e);
                         //エラー時、SnackBarを表示
                         final snackBar = SnackBar(
                           backgroundColor: Colors.red,
