@@ -1,4 +1,5 @@
 import 'package:book_list_sample/login/login_model.dart';
+import 'package:book_list_sample/register/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,6 +60,19 @@ class LoginPage extends StatelessWidget {
                       }
                     },
                     child: Text('ログイン'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      // 画面遷移
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterPage(),
+                          fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
+                        ),
+                      );
+                    },
+                    child: Text('新規登録の方はこちら'),
                   ),
                 ],
               ),
