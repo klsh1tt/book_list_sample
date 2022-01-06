@@ -9,6 +9,18 @@ class RegisterModel extends ChangeNotifier {
   String? email;
   String? password;
 
+    bool isLoading = false;
+
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+    void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
+
   void setEmail(String email) {
     this.email = email;
     notifyListeners();
@@ -32,7 +44,7 @@ class RegisterModel extends ChangeNotifier {
         final uid = user.uid;
 
         // firestoreに追加
-        final doc = FirebaseFirestore.instance.collection('books').doc(uid);
+        final doc = FirebaseFirestore.instance.collection('users').doc(uid);
         await doc.set({
           'uid': uid,
           'email': email,
