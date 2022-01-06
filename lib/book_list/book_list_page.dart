@@ -2,6 +2,7 @@ import 'package:book_list_sample/add_book/add_book_page.dart';
 import 'package:book_list_sample/book_list/book_list_model.dart';
 import 'package:book_list_sample/domain/book.dart';
 import 'package:book_list_sample/edit_book/edit_book_page.dart';
+import 'package:book_list_sample/login/login_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -19,9 +20,20 @@ class BookListPage extends StatelessWidget {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: const Text(
-            '本一覧',
-          ),
+          title: const Text('本一覧'),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                      fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
+                    ),
+                  );
+                },
+                icon: Icon(Icons.person)),
+          ],
         ),
         body: Center(
           child: Consumer<BookListModel>(builder: (context, model, child) {
