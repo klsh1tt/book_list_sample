@@ -32,8 +32,10 @@ class MyPage extends StatelessWidget {
                     Text(model.email ?? 'メールアドレスなし'),
                     Text('自己紹介'),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         //ログアウト
+                        await model.logout();
+                        Navigator.of(context).pop();
                       },
                       child: Text('ログアウト'),
                     )
