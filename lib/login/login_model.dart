@@ -37,9 +37,6 @@ class LoginModel extends ChangeNotifier {
     if (email != null && password != null) {
       // ログイン
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email!, password: password!);
-
-      final currentUser = FirebaseAuth.instance.currentUser;
-      final uid = currentUser!.uid;
     }
   }
 }

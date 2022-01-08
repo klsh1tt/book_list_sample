@@ -26,28 +26,29 @@ class BookListPage extends StatelessWidget {
           title: const Text('本一覧'),
           actions: [
             IconButton(
-                onPressed: () async {
-                  if (FirebaseAuth.instance.currentUser != null) {
-                    print('ログインしている');
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyPage(),
-                        fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
-                      ),
-                    );
-                  } else {
-                    print('ログインしていない');
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                        fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
-                      ),
-                    );
-                  }
-                },
-                icon: Icon(Icons.person)),
+              onPressed: () async {
+                if (FirebaseAuth.instance.currentUser != null) {
+                  print('ログインしている');
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPage(),
+                      fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
+                    ),
+                  );
+                } else {
+                  print('ログインしていない');
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                      fullscreenDialog: true, //遷移先の画面が下から上へ登ってくるように表示される
+                    ),
+                  );
+                }
+              },
+              icon: Icon(Icons.person),
+            ),
           ],
         ),
         body: Center(
