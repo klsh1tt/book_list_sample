@@ -6,7 +6,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MyModel>(
-      create: (_) => MyModel(),
+      create: (_) => MyModel()..fetchUser(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -29,8 +29,14 @@ class MyPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text('メールアドレス'),
+                    Text(model.email ?? 'メールアドレスなし'),
                     Text('自己紹介'),
+                    TextButton(
+                      onPressed: () {
+                        //ログアウト
+                      },
+                      child: Text('ログアウト'),
+                    )
                   ],
                 ),
                 if (model.isLoading)
