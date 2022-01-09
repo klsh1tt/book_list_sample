@@ -12,18 +12,21 @@ class MyPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('マイページ'),
           actions: [
-            IconButton(
-              onPressed: () async {
-                //画面遷移
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProfilePage(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.edit),
-            ),
+            Consumer<MyModel>(builder: (context, model, child) {
+              return IconButton(
+                onPressed: () async {
+                  //画面遷移
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfilePage(model.name!, model.description!),
+                    ),
+                  );
+                  model.fetchUser();
+                },
+                icon: Icon(Icons.edit),
+              );
+            }),
           ],
         ),
         body: Center(
@@ -35,7 +38,7 @@ class MyPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '名前',
+                        model.name ?? '名前なし',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -43,7 +46,7 @@ class MyPage extends StatelessWidget {
                       ),
                     ),
                     Text(model.email ?? 'メールアドレスなし'),
-                    Text('自己紹介'),
+                    Text(model.description ?? '自己紹介なし'),
                     TextButton(
                       onPressed: () async {
                         //ログアウト

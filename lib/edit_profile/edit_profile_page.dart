@@ -4,10 +4,17 @@ import 'package:provider/provider.dart';
 import 'edit_profile_model.dart';
 
 class EditProfilePage extends StatelessWidget {
+  EditProfilePage(this.name, this.description);
+  final String name;
+  final String description;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<EditProfileModel>(
-      create: (_) => EditProfileModel(),
+      create: (_) => EditProfileModel(
+        name,
+        description,
+      ),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
